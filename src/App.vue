@@ -1,5 +1,7 @@
 <template>
   <div>
+    <navbar :todos="todos"></navbar>
+
     <todo-list :todos="todos"></todo-list>
 
     <create-todo v-on:add-todo="addTodo"></create-todo>
@@ -9,12 +11,14 @@
 <script>
 import TodoList from './components/TodoList.vue'
 import CreateTodo from './components/CreateTodo.vue'
+import Navbar from './components/navbar/Navbar.vue'
 
 export default {
   name: 'app',
   components: {
     TodoList,
     CreateTodo,
+    Navbar,
   },
   data() {
     return {
@@ -37,7 +41,7 @@ export default {
    addTodo(todo) {
       this.todos.push({
         title: todo.title,
-        title: todo.project,
+        project: todo.project,
         done: todo.done,
       });
     },
