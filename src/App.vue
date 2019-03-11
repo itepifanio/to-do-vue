@@ -1,16 +1,20 @@
 <template>
   <div>
     <todo-list :todos="todos"></todo-list>
+
+    <create-todo v-on:add-todo="addTodo"></create-todo>
   </div>
 </template>
 
 <script>
 import TodoList from './components/TodoList.vue'
+import CreateTodo from './components/CreateTodo.vue'
 
 export default {
   name: 'app',
   components: {
     TodoList,
+    CreateTodo,
   },
   data() {
     return {
@@ -28,6 +32,15 @@ export default {
         done: true,
       }]
     };
+  },
+  methods: {
+   addTodo(title) {
+    console.log('hue');
+      this.todos.push({
+        title,
+        done: false,
+      });
+    },
   }
 }
 </script>
