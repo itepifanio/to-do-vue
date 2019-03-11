@@ -34,11 +34,11 @@ export default {
     };
   },
   methods: {
-   addTodo(title) {
-    console.log('hue');
+   addTodo(todo) {
       this.todos.push({
-        title,
-        done: false,
+        title: todo.title,
+        title: todo.project,
+        done: todo.done,
       });
     },
   }
