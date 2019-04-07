@@ -7,9 +7,9 @@
             </div>
             <div class="col-md-4" style="max-width:none">
                 <div class='ui centered card-body'>
-                    <todo-list :todos="todos"></todo-list>
+                    <todo-list :todos="filterList(kanban.id, todos)"></todo-list>
 
-                    <create-todo v-on:add-todo="addTodo" :kanban-id="index"></create-todo>
+                    <create-todo v-on:add-todo="addTodo" :kanbanid="kanban.id"></create-todo>
                 </div>
             </div>
         </div>
@@ -26,6 +26,20 @@ export default {
     components: {
         TodoList,
         CreateTodo
+    },
+    methods: {
+        filterList(id, todos){
+            return todos.filter(item => {
+                return item.kanbanid === id;
+            });
+        },
+        addTodo(todo) {
+            this.todos.push({
+                title: todo.title,
+                project: todo.project,
+                kanbanid: todo.kanbanid
+            });
+        },
     }
 };
 </script>

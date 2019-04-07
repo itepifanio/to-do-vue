@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    props: ['kanban-id'],
+    props: ['kanbanid'],
     data() {
         return {
             titleText: '',
@@ -51,9 +51,12 @@ export default {
             if (this.titleText.length > 0 && this.projectText.length > 0) {
                 const title = this.titleText;
                 const project = this.projectText;
+                const kanbanid = this.kanbanid;
+
                 this.$emit('add-todo', {
                     title,
-                    project
+                    project,
+                    kanbanid
                 });
                 this.newTodoText = '';
             }

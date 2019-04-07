@@ -8,20 +8,20 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          Completed Tasks: {{todos.filter(todo => {return todo.done === true}).length}}
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          Pending Tasks: {{todos.filter(todo => {return todo.done === false}).length}}
-        </a>
-      </li>
-    </ul>
-  </div>
+<!--  <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--    <ul class="navbar-nav ml-auto">-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">-->
+<!--          Completed Tasks: {{todos.filter(todo => {return todo.done === true}).length}}-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">-->
+<!--          Pending Tasks: {{todos.filter(todo => {return todo.done === false}).length}}-->
+<!--        </a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
 </nav>
 </template>
 

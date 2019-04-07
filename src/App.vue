@@ -44,14 +44,6 @@ export default {
                 title: 'Done'
             }]
         };
-    },
-    methods: {
-        addTodo(todo) {
-            this.todos.push({
-                title: todo.title,
-                project: todo.project
-            });
-        },
     }
 }
 </script>
