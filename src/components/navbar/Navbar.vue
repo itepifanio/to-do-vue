@@ -30,3 +30,9 @@ export default{
   props: ['todos']
 }
 </script>
+
+<style>
+.navbar {
+  margin-bottom: 40px;
+}
+</style>
