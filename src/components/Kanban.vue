@@ -45,7 +45,7 @@
             addTodo(todo) {
                 this.todos.push({
                     title: todo.title,
-                    project: todo.project,
+                    description: todo.description,
                     kanbanid: todo.kanbanid
                 });
             },

@@ -8,7 +8,7 @@
 <script>
     import Kanban from './components/Kanban.vue'
     import Navbar from './components/navbar/Navbar.vue'
-
+    import moment from 'moment';
     export default {
         name: 'app',
         components: {
@@ -19,15 +19,18 @@
             return {
                 todos: [{
                     title: 'Title 1',
-                    project: 'Description x',
+                    description: 'Description x',
+                    date: moment.now(),
                     kanbanid: 1
                 }, {
                     title: 'Title 2',
-                    project: 'Description y',
+                    description: 'Description y',
+                    date: moment.now(),
                     kanbanid: 2
                 }, {
                     title: 'Title 3',
-                    project: 'Description z',
+                    description: 'Description z',
+                    date: moment.now(),
                     kanbanid: 3
                 }],
                 kanbans: [{

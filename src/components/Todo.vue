@@ -5,15 +5,19 @@
                 {{ todo.title }}
             </div>
             <div class='meta'>
-                {{ todo.project }}
+                {{ todo.description }}
             </div>
+            <div style="text-align: right;padding-bottom: 15px">
+                {{format(todo.date)}}
+            </div>
+
             <div class='extra content'>
-            <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
-          <i class='trash icon'></i>
-        </span>
+                <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
+                    <i class='trash icon'></i>
+                </span>
                 <span class='right floated edit icon' v-on:click="showForm">
-          <i class='edit icon'></i>
-        </span>
+                    <i class='edit icon'></i>
+                </span>
             </div>
         </div>
 
@@ -25,7 +29,11 @@
                 </div>
                 <div class='field'>
                     <label>Description</label>
-                    <input type='text' v-model="todo.project">
+                    <input type='text' v-model="todo.description">
+                </div>
+                <div style="text-align: right; padding-bottom: 15px">
+                    <label>Date</label>
+                    <input type='date' v-model="todo.date">
                 </div>
                 <div class='ui two button attached buttons'>
                     <button class='ui basic blue button' v-on:click="hideForm">
@@ -38,6 +46,7 @@
 </template>
 
 <script type="text/javascript">
+    import moment from 'moment';
     import {EventBus} from "../Events";
 
     export default {
@@ -48,6 +57,9 @@
             };
         },
         methods: {
+            format(date){
+                return moment(date).format('DD/MM/YYYY');
+            },
             showForm() {
                 this.isEditing = true;
             },

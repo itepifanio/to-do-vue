@@ -1,7 +1,6 @@
 <template>
     <div>
-        <todo v-for="(todo, index) in todos"
-              :key="index" :todo.sync="todo"></todo>
+        <todo v-for="(todo, index) in todos" :key="index" :todo.sync="todo"></todo>
     </div>
 </template>
 
