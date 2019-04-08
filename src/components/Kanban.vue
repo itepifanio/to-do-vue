@@ -1,6 +1,6 @@
 <template>
-<div class="row">
-    <span v-for="(kanban, index) in kanbans" :key="index">
+    <div class="row">
+    <span v-for="(kanban, index) in kanbans" :key="index" class="col-md-4">
         <div class='card padding-card'>
             <div class="card-header">
                 {{ kanban.title }}
@@ -14,38 +14,47 @@
             </div>
         </div>
     </span>
-</div>
+    </div>
 </template>
 
-<script type = "text/javascript" >
-import TodoList from './TodoList';
-import CreateTodo from './CreateTodo';
+<script type="text/javascript">
+    import TodoList from './TodoList';
+    import CreateTodo from './CreateTodo';
+    import {EventBus} from "../Events";
 
-export default {
-    props: ['kanbans', 'todos'],
-    components: {
-        TodoList,
-        CreateTodo
-    },
-    methods: {
-        filterList(id, todos){
-            return todos.filter(item => {
-                return item.kanbanid === id;
+    export default {
+        props: ['kanbans', 'todos'],
+        components: {
+            TodoList,
+            CreateTodo
+        },
+        mounted() {
+            let todos = this.todos;
+
+            EventBus.$on('delete-todo', function (todo) {
+                const todoIndex = todos.indexOf(todo);
+                todos.splice(todoIndex, 1);
             });
         },
-        addTodo(todo) {
-            this.todos.push({
-                title: todo.title,
-                project: todo.project,
-                kanbanid: todo.kanbanid
-            });
-        },
-    }
-};
+        methods: {
+            filterList(id, todos) {
+                return todos.filter(item => {
+                    return item.kanbanid === id;
+                });
+            },
+            addTodo(todo) {
+                this.todos.push({
+                    title: todo.title,
+                    project: todo.project,
+                    kanbanid: todo.kanbanid
+                });
+            },
+        }
+    };
 </script>
 
 <style>
-    .padding-card{
+    .padding-card {
         margin-right: 15px;
         margin-left: 15px;
     }
