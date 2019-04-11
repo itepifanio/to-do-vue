@@ -16,7 +16,6 @@ function main() {
     .then(() => kanban.create('Doing'))
     .then((data) => {
       kanbanId = data.id;
-
       const todos = [
         {
           title: 'Need do something',
@@ -26,10 +25,9 @@ function main() {
           kanbanid: kanbanId
         },
       ]
-
       return Promise.all(todos.map((t) => {
-        const { title, description, date, kanbanId } = t
-        return todo.create(title, description, date, kanbanId)
+        const { title, description, date } = t; // Por algum mistério da natureza kanbanId aqui fica undefined na hora de criar
+        return todo.create(title, description, date, t.kanbanid)
       }))
     })
     .catch((err) => {

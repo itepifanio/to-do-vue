@@ -17,11 +17,11 @@ class Todo {
     return this.dao.run(sql);
   }
 
-  create(title, description, date){
+  create(title, description, date, kanbanid){
     return this.dao.run(
-      ` INSERT INTO todos (title, description, date) 
-        VALUES (?, ?, ?) `,
-        [title, description, date]
+      ` INSERT INTO todos (title, description, date, kanbanid) 
+        VALUES (?, ?, ?, ?) `,
+        [title, description, date, kanbanid]
     );
   }
 

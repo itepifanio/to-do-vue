@@ -28,3 +28,13 @@ npm run build
 ```
 npm run lint
 ```
+
+### Criando banco de dados
+```
+node src/api/main.js
+```
+
+### Executando a API
+```
+node src/api/express.js
+```
