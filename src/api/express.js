@@ -11,6 +11,12 @@ const kanban = new Kanban(dao)
 const Todo = require('./to-do')
 const todos = new Todo(dao) 
 
+app.use(function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.get('/api/kanbans',
     (req, res) => kanban.getAll().then(
         ev => res.json(ev)

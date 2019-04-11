@@ -6,9 +6,11 @@
 </template>
 
 <script>
+    const host = 'localhost:3000';
+
     import Kanban from './components/Kanban.vue'
     import Navbar from './components/navbar/Navbar.vue'
-    import moment from 'moment';
+    import axios from 'axios';
     export default {
         name: 'app',
         components: {
@@ -17,22 +19,7 @@
         },
         data() {
             return {
-                todos: [{
-                    title: 'Title 1',
-                    description: 'Description x',
-                    date: moment.now(),
-                    kanbanid: 1
-                }, {
-                    title: 'Title 2',
-                    description: 'Description y',
-                    date: moment.now(),
-                    kanbanid: 2
-                }, {
-                    title: 'Title 3',
-                    description: 'Description z',
-                    date: moment.now(),
-                    kanbanid: 3
-                }],
+                todos: [],
                 kanbans: [{
                     id: 1,
                     title: 'To do'
@@ -44,6 +31,15 @@
                     title: 'Done'
                 }]
             };
+        },
+        mounted() {
+            const MyApiClient = axios.create({
+                baseURL: 'http://localhost:3000',
+                timeout: 1000
+            });
+
+            MyApiClient.get('api/todos').then(
+                response => (this.todos = response.data))
         }
     }
 </script>
