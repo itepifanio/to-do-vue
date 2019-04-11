@@ -18,6 +18,12 @@ class Kanban {
         [title]
     );
   }
+
+  getAll(){
+    return this.dao.all(
+      ` SELECT * FROM kanbans`
+    );
+  }
 }
 
 module.exports = Kanban; 

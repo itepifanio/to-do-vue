@@ -1,30 +1,30 @@
 # to-do-list
 
-## Project setup
+To-do list feito em Vue e Vue-CLI.
+
+A estilização das páginas foi feita utilizando bootstrap 3.
+
+A API foi desenvolvida utilizando node e express.js.
+
+O banco de dados utilizados foi o sqlite.
+
+
+## Setup do projeto
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compilando e executando a view
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compilando e minificando para produção
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
+### Executando o lint
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
