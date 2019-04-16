@@ -6,11 +6,10 @@
 </template>
 
 <script>
-    const host = 'localhost:3000';
-
     import Kanban from './components/Kanban.vue'
     import Navbar from './components/navbar/Navbar.vue'
     import axios from 'axios';
+    
     export default {
         name: 'app',
         components: {
