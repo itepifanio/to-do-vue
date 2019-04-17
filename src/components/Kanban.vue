@@ -15,16 +15,7 @@
         data() {
             return {
                 todos: [],
-                kanbans: [{
-                    id: 1,
-                    title: 'To do'
-                }, {
-                    id: 2,
-                    title: 'Doing'
-                }, {
-                    id: 3,
-                    title: 'Done'
-                }]
+                kanbans: []
             };
         },
         mounted() {
@@ -35,6 +26,9 @@
 
             MyApiClient.get('api/todos').then(
                 response => (this.todos = response.data))
+
+            MyApiClient.get('api/kanbans').then(
+                response => (this.kanbans = response.data))
         }
     }
 </script>

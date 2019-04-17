@@ -7,39 +7,12 @@
 </template>
 
 <script>
-    // import Kanban from './components/Kanban.vue'
     import Navbar from './components/navbar/Navbar.vue'
-    import axios from 'axios';
-    
+       
     export default {
         name: 'app',
         components: {
-            // Kanban,
             Navbar,
-        },
-        data() {
-            return {
-                todos: [],
-                kanbans: [{
-                    id: 1,
-                    title: 'To do'
-                }, {
-                    id: 2,
-                    title: 'Doing'
-                }, {
-                    id: 3,
-                    title: 'Done'
-                }]
-            };
-        },
-        mounted() {
-            const MyApiClient = axios.create({
-                baseURL: 'http://localhost:3000',
-                timeout: 1000
-            });
-
-            MyApiClient.get('api/todos').then(
-                response => (this.todos = response.data))
         }
     }
 </script>
