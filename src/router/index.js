@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue'
 import Router from 'vue-router'
-import App from '../App.vue'
+import Kanban from '../components/Kanban.vue'
 import Login from '../components/Login.vue'
 
 Vue.use(Router)
@@ -17,9 +17,9 @@ export default new Router({
             redirect: '/login'
         },
         {
-            path: '/',
+            path: '/home',
             name: 'home',
-            component: App
+            component: Kanban
         }
     ]
 });

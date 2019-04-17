@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navbar :todos="todos"></navbar>
+        <navbar></navbar>
         <router-view></router-view>
         <!-- <kanban :todos="todos" :kanbans="kanbans"></kanban> -->
     </div>
