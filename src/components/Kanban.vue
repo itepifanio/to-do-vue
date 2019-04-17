@@ -1,61 +1,40 @@
 <template>
-    <div class="row">
-    <span v-for="(kanban, index) in kanbans" :key="index" class="col-md-4">
-        <div class='card padding-card'>
-            <div class="card-header">
-                {{ kanban.title }}
-            </div>
-            <div class="col-md-4" style="max-width:none">
-                <div class='ui centered card-body'>
-                    <todo-list :todos="filterList(kanban.id, todos)"></todo-list>
-
-                    <create-todo v-on:add-todo="addTodo" :kanbanid="kanban.id"></create-todo>
-                </div>
-            </div>
-        </div>
+    <span>
+        <kanban-card :todos="todos" :kanbans="kanbans"></kanban-card>
     </span>
-    </div>
 </template>
 
-<script type="text/javascript">
-    import TodoList from './TodoList';
-    import CreateTodo from './CreateTodo';
-    import {EventBus} from "../Events";
-
+<script>
+    import KanbanCard from './KanbanCard.vue'
+    import axios from 'axios';
+    
     export default {
-        props: ['kanbans', 'todos'],
         components: {
-            TodoList,
-            CreateTodo
+            KanbanCard
+        },
+        data() {
+            return {
+                todos: [],
+                kanbans: [{
+                    id: 1,
+                    title: 'To do'
+                }, {
+                    id: 2,
+                    title: 'Doing'
+                }, {
+                    id: 3,
+                    title: 'Done'
+                }]
+            };
         },
         mounted() {
-            let todos = this.todos;
-
-            EventBus.$on('delete-todo', function (todo) {
-                const todoIndex = todos.indexOf(todo);
-                todos.splice(todoIndex, 1);
+            const MyApiClient = axios.create({
+                baseURL: 'http://localhost:3000',
+                timeout: 1000
             });
-        },
-        methods: {
-            filterList(id, todos) {
-                return todos.filter(item => {
-                    return item.kanbanid === id;
-                });
-            },
-            addTodo(todo) {
-                this.todos.push({
-                    title: todo.title,
-                    description: todo.description,
-                    kanbanid: todo.kanbanid
-                });
-            },
-        }
-    };
-</script>
 
-<style>
-    .padding-card {
-        margin-right: 15px;
-        margin-left: 15px;
+            MyApiClient.get('api/todos').then(
+                response => (this.todos = response.data))
+        }
     }
-</style>
+</script>

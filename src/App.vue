@@ -1,20 +1,20 @@
 <template>
     <div>
-        <navbar :todos="todos"></navbar>
-        <kanban :todos="todos" :kanbans="kanbans"></kanban>
+        <navbar></navbar>
+        <router-view></router-view>
+        <!-- <kanban :todos="todos" :kanbans="kanbans"></kanban> -->
     </div>
 </template>
 
 <script>
-    const host = 'localhost:3000';
-
-    import Kanban from './components/Kanban.vue'
+    // import Kanban from './components/Kanban.vue'
     import Navbar from './components/navbar/Navbar.vue'
     import axios from 'axios';
+    
     export default {
         name: 'app',
         components: {
-            Kanban,
+            // Kanban,
             Navbar,
         },
         data() {
