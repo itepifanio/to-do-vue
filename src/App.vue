@@ -2,7 +2,6 @@
     <div>
         <navbar></navbar>
         <router-view></router-view>
-        <!-- <kanban :todos="todos" :kanbans="kanbans"></kanban> -->
     </div>
 </template>
 

@@ -47,7 +47,7 @@
 
 <script type="text/javascript">
     import moment from 'moment';
-    import {EventBus} from "../Events";
+    import {EventBus} from "../../Events";
 
     export default {
         props: ['todo'],

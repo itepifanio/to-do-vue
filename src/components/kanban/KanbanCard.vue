@@ -18,9 +18,9 @@
 </template>
 
 <script type="text/javascript">
-    import TodoList from './TodoList';
-    import CreateTodo from './CreateTodo';
-    import {EventBus} from "../Events";
+    import TodoList from '../todo/TodoList';
+    import CreateTodo from '../todo/CreateTodo';
+    import {EventBus} from "../../Events";
 
     export default {
         props: ['kanbans', 'todos'],
