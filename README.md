@@ -31,10 +31,10 @@ npm run lint
 
 ### Criando banco de dados
 ```
-node src/api/main.js
+node src/model/api/main.js
 ```
 
 ### Executando a API
 ```
-node src/api/express.js
+node src/api/router/express.js
 ```
