@@ -47,6 +47,7 @@
 
 <script type="text/javascript">
     import moment from 'moment';
+    import axios from 'axios';
     import {EventBus} from "../../Events";
 
     export default {
@@ -70,5 +71,14 @@
                 EventBus.$emit('delete-todo', todo);
             }
         },
+        watch: {
+            isEditing: function(){
+                const MyApiClient = axios.create({
+                        baseURL: 'http://localhost:3000',
+                        timeout: 6000
+                    });
+                MyApiClient.put('api/todos/update', JSON.stringify(this.todo));
+            }
+        }
     };
 </script>
