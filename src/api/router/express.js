@@ -9,7 +9,7 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 
 /* ******************** CONTROLLERS ************************* */
 const todoController = require('../controllers/todoController');

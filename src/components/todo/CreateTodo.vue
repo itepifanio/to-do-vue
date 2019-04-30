@@ -65,7 +65,7 @@
                     const title = this.titleText;
                     const description = this.projectText;
                     const kanbanid = this.kanbanid;
-                    const date = this.date;
+                    const date = Date.parse(this.date);
 
                     this.$emit('add-todo', {
                         title,
