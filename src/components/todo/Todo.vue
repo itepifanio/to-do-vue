@@ -58,7 +58,7 @@
         },
         methods: {
             format(date){
-                return moment(date).format('DD/MM/YYYY');
+                return moment(parseInt(date)).format('DD/MM/YYYY');
             },
             showForm() {
                 this.isEditing = true;
