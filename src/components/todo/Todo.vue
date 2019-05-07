@@ -74,10 +74,11 @@
         watch: {
             isEditing: function(){
                 const MyApiClient = axios.create({
-                        baseURL: 'http://localhost:3000',
-                        timeout: 6000
-                    });
-                MyApiClient.put('api/todos/update', JSON.stringify(this.todo));
+                    baseURL: 'http://localhost:3000',
+                    timeout: 6000
+                });
+                this.todo.date = Date.parse(this.todo.date);
+                MyApiClient.put('api/todos/update', this.todo);
             }
         }
     };

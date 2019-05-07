@@ -17,8 +17,7 @@ exports.store = function(req, res){
 }
 
 exports.update = function(req, res){
-    const {id, title, description, date, kanbanid} = req.body;
-    console.log(id);
-    todos.update(id, title, description, date, kanbanid);
+    const todo = req.body;
+    todos.update(todo);
     res.status(200).send('Success');
 }
