@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Kanban from '../components/kanban/Kanban.vue'
 import Login from '../components/auth/Login.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
