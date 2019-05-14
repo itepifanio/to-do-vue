@@ -21,6 +21,7 @@
     import TodoList from '../todo/TodoList';
     import CreateTodo from '../todo/CreateTodo';
     import {EventBus} from "../../main";
+    import axios from 'axios';
 
     export default {
         props: ['kanbans', 'todos'],
@@ -30,10 +31,15 @@
         },
         mounted() {
             let todos = this.todos;
+            const MyApiClient = axios.create({
+                    baseURL: 'http://localhost:3000',
+                    timeout: 6000
+                });
 
             EventBus.$on('delete-todo', function (todo) {
                 const todoIndex = todos.indexOf(todo);
                 todos.splice(todoIndex, 1);
+                MyApiClient.post('api/todos/delete/' + todo.id);
             });
         },
         methods: {
