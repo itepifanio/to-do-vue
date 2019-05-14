@@ -9,23 +9,27 @@
                             <div class="form-group">
                                 <label for="name"><i class="user icon"></i></label>
                                 <input type="text" name="name" id="name" placeholder="Seu nome"/>
+                                <div id="namemsg"></div><br/>
                             </div>
 
                             <div class="form-group">
                                 <label for="email"><i class="mail icon"></i></label>
                                 <input type="email" name="email" id="email" placeholder="Seu e-mail"/>
+                                <div id="emailmsg">  </div><br/>
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="lock icon"></i></label>
                                 <input type="password" name="pass" id="pass" placeholder="Senha"/>
+                                <div id="passmsg">  </div><br/>
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="unlock icon"></i></label>
                                 <input type="password" name="re_pass" id="re_pass" placeholder="Repita a senha"/>
+                                <div id="repassmsg">  </div><br/>
                             </div>
                            
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Enviar dados"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Enviar dados" onclick="return validateUser()"/>
                             </div>
                             
                         </form>
@@ -40,6 +44,30 @@
     </div>
 
 </template>
+
+<script>
+
+function validateUser()
+{
+    var x=document.forms["register-form"]["email"].value;
+    var atpos=x.indexOf("@");
+    var dotpos=x.lastIndexOf(".");
+    if (atpos<2 || dotpos<atpos+2 || dotpos+2>=x.length)
+    {
+        alert("E-mail inválido.");
+        return false;
+    }
+
+    {
+        alert("Entrada inválida.");
+    }
+
+    return true;
+}
+
+
+
+</script>
 
 <style>
 
