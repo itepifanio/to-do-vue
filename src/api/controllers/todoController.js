@@ -21,3 +21,8 @@ exports.update = function(req, res){
     todos.update(todo);
     res.status(200).send('Success');
 }
+
+exports.delete = function(req, res){
+    todos.delete(req.params.id);
+    res.status(200).send('Success');
+}

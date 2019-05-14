@@ -20,7 +20,7 @@
 <script type="text/javascript">
     import TodoList from '../todo/TodoList';
     import CreateTodo from '../todo/CreateTodo';
-    import {EventBus} from "../../Events";
+    import {EventBus} from "../../main";
 
     export default {
         props: ['kanbans', 'todos'],

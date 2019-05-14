@@ -48,7 +48,7 @@
 <script type="text/javascript">
     import moment from 'moment';
     import axios from 'axios';
-    import {EventBus} from "../../Events";
+    import {EventBus} from "../../main";
 
     export default {
         props: ['todo'],

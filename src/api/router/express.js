@@ -22,5 +22,6 @@ app.get('/api/kanbans', kanbanController.kanbanList);
 app.get('/api/todos', todoController.list);
 app.post('/api/todos/store', todoController.store);
 app.put('/api/todos/update', todoController.update);
+app.post('/api/todos/delete/:id', todoController.delete);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
