@@ -21,9 +21,9 @@ class User {
     );
   }
 
-  getAll(){
+  getUser(email){
     return this.dao.all(
-      ` SELECT * FROM users`
+      ` SELECT * FROM users WHERE email = ?`, [email]
     );
   }
 }
