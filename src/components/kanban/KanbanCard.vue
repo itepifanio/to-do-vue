@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-    <span v-for="(kanban, index) in kanbans" :key="index" class="col-md-4">
+    <span v-for="kanban in kanbans" :key="kanban.id" class="col-md-4">
         <div class='card padding-card'>
             <div class="card-header">
                 {{ kanban.title }}
@@ -21,7 +21,7 @@
     import TodoList from '../todo/TodoList';
     import CreateTodo from '../todo/CreateTodo';
     import {EventBus} from "../../main";
-    import axios from 'axios';
+    import axios from 'axios';  
 
     export default {
         props: ['kanbans', 'todos'],
@@ -35,12 +35,11 @@
                     baseURL: 'http://localhost:3000',
                     timeout: 6000
                 });
-
+            console.log(todos.length);
             EventBus.$on('delete-todo', function (todo) {
-                const todoIndex = todos.indexOf(todo);
-                todos.splice(todoIndex, 1);
+                EventBus.$emit('update:todos');
                 MyApiClient.post('api/todos/delete/' + todo.id);
-            });
+            });            
         },
         methods: {
             filterList(id, todos) {
