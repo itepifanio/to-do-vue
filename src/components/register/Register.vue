@@ -276,8 +276,7 @@ figure {
 .form-group:last-child {
     margin-bottom: 0px; 
 }
-
-input[type=text], input[type=text], input[type=email], input[type=search], input[type=password] {
+.signup input[type=text], .signup input[type=text], .signup input[type=email], .signup input[type=search], .signup input[type=password] {
     width: 100% !important;
     display: block !important;
     border: none !important;
@@ -291,6 +290,19 @@ input[type=text], input[type=text], input[type=email], input[type=search], input
     border-radius: 0 !important;
     margin: 0 !important;
 }
+
+.signup .form-group {
+    margin-bottom: 0px !important;
+}
+
+.signup i.icon, .signup i.icons {
+    font-size: 20px;
+}
+
+.signup label{
+    top: 30% !important;
+}
+
 input::-webkit-input-placeholder {
     color: #999; 
 }
