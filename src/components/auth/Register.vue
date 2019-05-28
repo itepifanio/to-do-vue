@@ -45,32 +45,7 @@
 
 </template>
 
-<script>
-
-function validateUser()
-{
-    var x=document.forms["register-form"]["email"].value;
-    var atpos=x.indexOf("@");
-    var dotpos=x.lastIndexOf(".");
-    if (atpos<2 || dotpos<atpos+2 || dotpos+2>=x.length)
-    {
-        alert("E-mail inválido.");
-        return false;
-    }
-
-    {
-        alert("Entrada inválida.");
-    }
-
-    return true;
-}
-
-
-
-</script>
-
 <style>
-
 display-flex, .display-flex, .display-flex-center, .signup-content {
     display: flex;
     display: -webkit-flex; 

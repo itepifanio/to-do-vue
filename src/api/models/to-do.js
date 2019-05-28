@@ -26,15 +26,15 @@ class Todo {
   }
 
   update(todo){
-    const {id, title, description, date} = todo;
-
+    const {id, title, description, date, kanbanid} = todo;
     return this.dao.run(
       ` UPDATE todos 
       SET title = ?,
           description = ?,
-          date = ? 
+          date = ?,
+          kanbanid = ?
       WHERE id = ?`,
-      [title, description, date, id]
+      [title, description, date, kanbanid, id]
     );
   }
 
@@ -47,6 +47,13 @@ class Todo {
 
   getAll() {
     return this.dao.all(`SELECT * FROM todos`);
+  }
+
+  first(id) {
+    return this.dao.all(
+      `SELECT * FROM todos WHERE id = ? LIMIT 1`,
+      [id]
+    );
   }
 
 }
