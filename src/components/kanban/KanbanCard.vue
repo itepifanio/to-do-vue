@@ -30,12 +30,11 @@
             CreateTodo
         },
         mounted() {
-            let todos = this.todos;
             const MyApiClient = axios.create({
                     baseURL: 'http://localhost:3000',
                     timeout: 6000
                 });
-            console.log(todos.length);
+            
             EventBus.$on('delete-todo', function (todo) {
                 EventBus.$emit('update:todos');
                 MyApiClient.post('api/todos/delete/' + todo.id);
