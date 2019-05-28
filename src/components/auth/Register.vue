@@ -306,7 +306,7 @@ input:focus:-moz-placeholder {
     color: #222; 
 }
 
-label {
+.signup label{
     position: absolute;
     left: 0;
     top: 50%;
