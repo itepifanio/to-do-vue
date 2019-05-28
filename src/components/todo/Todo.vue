@@ -59,7 +59,7 @@
         },
         methods: {
             format(date){
-                return moment(parseInt(date)).format('DD/MM/YYYY');
+                return moment(date).format('DD/MM/YYYY');
             },
             showForm() {
                 this.isEditing = true;
@@ -73,12 +73,14 @@
         },
         watch: {
             isEditing: function(){
+                if(this.isEditing == false){
                 const MyApiClient = axios.create({
                     baseURL: 'http://localhost:3000',
                     timeout: 6000
                 });
-                this.todo.date = Date.parse(this.todo.date);
+            
                 MyApiClient.put('api/todos/update', this.todo);
+                }
             }
         }
     };
