@@ -39,8 +39,8 @@
                 response => (this.kanbans = response.data))
         },
         watch:{
-            todos : function(){
-                todos = this.renderTodos();
+            'todos' : function(){
+                this.renderTodos();
             }
         },
         methods: {
