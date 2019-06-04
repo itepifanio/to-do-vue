@@ -414,6 +414,18 @@ input[type=button], input[type=submit], input[type=reset] {
     .form-title {
         text-align: center; 
     } 
+
+    .padding-card{
+        margin-bottom: 15px;
+    }
+}
+
+.card-bottom{
+    margin-bottom: 15px;
+}
+
+footer{
+    margin-top: 45px;
 }
 
 </style>

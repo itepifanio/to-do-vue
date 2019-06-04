@@ -38,6 +38,11 @@
             MyApiClient.get('api/kanbans').then(
                 response => (this.kanbans = response.data))
         },
+        watch:{
+            todos : function(){
+                todos = this.renderTodos();
+            }
+        },
         methods: {
             renderTodos(){
                 MyApiClient.get('api/todos').then(

@@ -1,10 +1,9 @@
 <template>
     <div>
         <draggable group="todos" @start="drag=true" @end="drag=false">
-            <div v-for="todo in todos" :key="todo.id">
+            <div v-for="todo in todos" :key="todo.id" class="card-bottom">
                 <todo :todo="todo"></todo>
             </div>
-            <!-- <div v-for="element in myArray" :key="element.id">{{element.name}}</div> -->
         </draggable>
         
     </div>
