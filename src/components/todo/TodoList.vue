@@ -1,6 +1,6 @@
 <template>
     <div>
-        <draggable v-model="todos" group="todos" @start="drag=true" @end="drag=false">
+        <draggable group="todos" @start="drag=true" @end="drag=false">
             <div v-for="todo in todos" :key="todo.id">
                 <todo :todo="todo"></todo>
             </div>
