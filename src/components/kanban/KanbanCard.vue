@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-4" style="max-width:none">
                 <div class='ui centered card-body'>
-                    <todo-list :todos="filterList(kanban.id, todos)"></todo-list>
+                    <todo-list :todos="filterList(kanban.id, todos)" :kanbanid="kanban.id"></todo-list>
 
                     <create-todo v-on:add-todo="addTodo" :kanbanid="kanban.id"></create-todo>
                 </div>
