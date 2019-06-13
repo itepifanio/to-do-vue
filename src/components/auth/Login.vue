@@ -24,6 +24,7 @@
 </div>
 </template>
 <script>  
+    import router from "../../router/index.js"
     import axios from "axios"   
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
@@ -36,14 +37,20 @@
         methods: { 
             login: (e) => {    
                 e.preventDefault()   
-                let email = "user@email.com"
-                let password = "password"
+                let email = e.target.elements.email.value
+                let password = e.target.elements.password.value
                 let login = () => {
-                    let data = {
+                    let user = {
                         email: email,
                         password: password
                     }
-                    MyApiClient.post('/api/login', data)
+                    MyApiClient.post('/api/login', user).then((response) => {
+                        console.log("Logged in")
+                        router.push("/home")
+                    })
+                    .catch((errors) => {
+                        console.log("Cannot login")
+                    })
                 }
                 login()
             }

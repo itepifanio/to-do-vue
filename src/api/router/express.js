@@ -4,7 +4,7 @@ const port = 3000
 const passport = require('passport');
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
-// const users = require('../models/user')
+const users = require('../models/user')
 const LocalStrategy = require('passport-local').Strategy
 
 app.use(function(req, res, next){
@@ -23,42 +23,9 @@ app.use(cookieSession({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 // https://blog.jscrambler.com/vue-js-authentication-system-with-node-js-backend
-let users = [
-    {
-      id: 1,
-      name: "Jude",
-      email: "user@email.com",
-      password: "password"
-    },
-    {
-      id: 2,
-      name: "Emma",
-      email: "emma@email.com",
-      password: "password2"
-    }
-]
 
-passport.use(
-    new LocalStrategy(
-        {
-            usernameField: "email",
-            passwordField: "password"
-        },
-
-        (username, password, done) => {
-            let user = users.find((user) => {
-                return user.email === username && user.password === password
-            })
-
-            if (user) {
-                done(null, user)
-            } else {
-                done(null, false, { message: 'Incorrect username or password'})
-            }
-        }
-    )
-)
 /* ******************** CONTROLLERS ************************* */
 const todoController = require('../controllers/todoController');
 const kanbanController = require('../controllers/kanbanController');
@@ -70,11 +37,39 @@ app.get('/api/todos', todoController.todoList);
 
 
 app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", { successRedirect: '/home',
-                                    failureRedirect: '/',
-                                    failureFlash: false }
-    )
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+          return next(err);
+        }
+        
+        if (!user) {
+          return res.status(400).send([user, "Cannot log in", info]);
+        }
+    
+        req.login(user, err => {
+          res.send("Logged in");
+        });
+      })(req, res, next);
 });
+
+passport.use(
+    new LocalStrategy(
+        {
+            usernameField: "email",
+            passwordField: "password"
+        },
+
+        (username, password, done) => {
+            let user = users.findUser({'email': username, 'password': password})
+            
+            if (user) {
+                done(null, user)
+            } else {
+                done(null, false, { message: 'Incorrect username or password'})
+            }
+        }
+    )
+)
 
 const authMiddleware = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -96,9 +91,7 @@ app.get("/api/user", authMiddleware, (req, res) => {
 
 app.get("/api/logout", function(req, res) {
     req.logout();
-  
     console.log("logged out")
-  
     return res.send();
 });
 

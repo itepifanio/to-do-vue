@@ -26,6 +26,15 @@ class User {
       ` SELECT * FROM users WHERE email = ?`, [email]
     );
   }
+
+  findUser(user) {
+    return this.dao.all(` SELECT * FROM users WHERE email = ? AND password`, [user.email, user.password])
+  }
+  getAll() {
+    return this.dao.all(
+      ` SELECT * FROM users`
+    );
+  }
 }
 
 module.exports = User; 
