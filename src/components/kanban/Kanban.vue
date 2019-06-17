@@ -7,7 +7,11 @@
 <script>
     import KanbanCard from './KanbanCard.vue'
     import axios from 'axios';
-    
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+
     export default {
         components: {
             KanbanCard
@@ -18,12 +22,21 @@
                 kanbans: []
             };
         },
-        mounted() {
-            const MyApiClient = axios.create({
-                baseURL: 'http://localhost:3000',
-                timeout: 1000
-            });
-
+        methods: {    
+            getUserData: function() {    
+                MyApiClient.get("/api/user")    
+                    .then((response) => {    
+                        console.log(response)    
+                    })    
+                    .catch((errors) => {    
+                        console.log(errors)    
+                        router.push("/")    
+                    })    
+            }    
+        },
+        mounted() {     
+            this.getUserData()  
+            
             MyApiClient.get('api/todos').then(
                 response => (this.todos = response.data))
 

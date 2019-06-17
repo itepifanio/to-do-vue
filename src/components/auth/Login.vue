@@ -41,8 +41,8 @@
                 let password = e.target.elements.password.value
                 let login = () => {
                     let user = {
-                        email: email,
-                        password: password
+                        'email': email,
+                        'password': password
                     }
                     MyApiClient.post('/api/login', user).then((response) => {
                         console.log("Logged in")

@@ -27,9 +27,16 @@ class User {
     );
   }
 
-  findUser(user) {
-    return this.dao.all(` SELECT * FROM users WHERE email = ? AND password`, [user.email, user.password])
+  find(id) {
+    return this.dao.get(
+      ` SELECT * FROM users WHERE id = ?`, [id]
+    );
   }
+  
+  findUser(email, password) {
+    return this.dao.get(` SELECT * FROM users WHERE email = ? AND password = ?`, [email, password])
+  }
+
   getAll() {
     return this.dao.all(
       ` SELECT * FROM users`
