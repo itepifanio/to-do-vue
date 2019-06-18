@@ -8,6 +8,12 @@ A API foi desenvolvida utilizando node e express.js.
 
 O banco de dados utilizados foi o sqlite.
 
+## Ferramentas
+```
+Node v11.6.0
+
+Vue v6.5.0
+```
 
 ## Setup do projeto
 ```
