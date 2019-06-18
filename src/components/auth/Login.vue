@@ -11,8 +11,8 @@
     <!-- Login Form -->
     <form v-on:submit="login">
       <input type="text" id="email" class="fadeIn second" name="email" placeholder="Seu e-mail">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Sua senha">
-      <input type="submit" class="fadeIn fourth" value="Entrar">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Sua senha">
+      <input type="submit" class="fadeIn fourth" value="Entrar" style="margin-bottom: 15px">
     </form>
 
     <!-- Remind Passowrd -->
@@ -23,44 +23,55 @@
   </div>
 </div>
 </template>
-<script>  
+<script>
     import router from "../../router/index.js"
-    import axios from "axios"   
+    import axios from "axios"
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
         timeout: 1000
     });
-  
-    export default {    
-        name: "Login",    
-        
-        methods: { 
-            login: (e) => {    
-                e.preventDefault()   
-                let email = e.target.elements.email.value
-                let password = e.target.elements.password.value
+
+    export default {
+        name: "Login",
+        methods: {
+            login: (e) => {
+                e.preventDefault()
+                let email = e.target.elements.email.value;
+                let password = e.target.elements.password.value;
                 let login = () => {
                     let user = {
                         'email': email,
                         'password': password
-                    }
+                    };
                     MyApiClient.post('/api/login', user).then((response) => {
-                        console.log("Logged in")
-                        router.push("/home")
+                      router.push("/home");
                     })
                     .catch((errors) => {
-                        console.log("Cannot login")
+                        console.log(errors);
                     })
                 }
                 login()
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        if(response.data.user) {
+                            router.push("/home");
+                        }
+                    }).catch((errors) => {
+
+                    })
             }
-        }
+        },
+        mounted() {
+          // this.getUserData()
+        },
     }
 </script>
 
 <style>
 /* BASIC */
-/* 
+/*
 html {
   background-color: #56baed;
 } */
@@ -83,7 +94,7 @@ h2 {
   font-weight: 600;
   text-transform: uppercase;
   display:inline-block;
-  margin: 40px 8px 10px 8px; 
+  margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
 
@@ -94,7 +105,7 @@ h2 {
 .wrapper {
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   min-height: 100%;
@@ -140,7 +151,6 @@ h2.active {
 
 
 /* FORM TYPOGRAPHY*/
-
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
   border: none;
@@ -175,7 +185,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

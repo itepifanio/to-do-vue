@@ -11,18 +11,21 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-
       <li class="nav-item">
-        <router-link to="/home" class="nav-link"> Início </router-link>
+        <router-link to="/" class="nav-link" v-show="!logged"> Login </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/" class="nav-link"> Entrar </router-link>
+        <router-link to="/register" class="nav-link" v-show="!logged"> Registro </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/register" class="nav-link"> Registrar-se </router-link>
+        <router-link to="/home" class="nav-link" v-show="logged"> Home </router-link>
       </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link" v-on:click="logout" v-show="logged"> Logout </a>
+        </li>
     </ul>
   </div>
 </nav>
@@ -30,8 +33,48 @@
 </template>
 
 <script>
-export default{
-}
+    import router from "../../router/index.js"
+    import axios from "axios"
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+
+    export default {
+        name: "Navbar",
+        data() {
+          return {
+            logged: false,
+          }
+        },
+        methods: {
+            logout: function(e) {
+              e.preventDefault();
+              MyApiClient.get('/api/logout')
+                .then((res) => {
+                  this.logged = false;
+                  router.push("/")
+                }).catch((err) => {
+                  console.log(err);
+              })
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        if(response.data.user) {
+                            this.logged = true;
+                            router.push("/home");
+                        }
+                    }).catch((errors) => {
+
+                    })
+            }
+        },
+        mounted() {
+          this.getUserData();
+        },
+    }
+
 </script>
 
 <style>

@@ -44,16 +44,13 @@ exports.login = function(req, res, next) {
 exports.user = (req, res) => {
     let user = users.findUser(user => {
       return user.id === req.session.passport.user
-    })
-  
-    console.log([user, req.session])
+    });
   
     res.send({ user: user })
 }
 
 exports.authMiddleware = function(req, res, next) {
     if (!req.isAuthenticated()) {
-        console.log(req.session.passport);
         res.status(401).send('You are not authenticated')
     } else {
         return next()

@@ -5,7 +5,6 @@ module.exports = function (app){
 
     // //Serealize Session
     passport.serializeUser(function (user,done){
-        console.log('Serializing')
         done(null,user);
     });
     // Deserealize Session
