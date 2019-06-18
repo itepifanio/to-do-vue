@@ -23,20 +23,24 @@
   </div>
 </div>
 </template>
-<script>  
+<script>
     import router from "../../router/index.js"
-    import axios from "axios"   
+    import axios from "axios"
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
         timeout: 1000
     });
-  
-    export default {    
-        name: "Login",    
-        
-        methods: { 
-            login: (e) => {    
-                e.preventDefault()   
+
+    export default {
+        name: "Login",
+        // data() {
+        //   return {
+        //     seen: true
+        //   }
+        // },
+        methods: {
+            login: (e) => {
+                e.preventDefault()
                 let email = e.target.elements.email.value
                 let password = e.target.elements.password.value
                 let login = () => {
@@ -45,16 +49,30 @@
                         'password': password
                     }
                     MyApiClient.post('/api/login', user).then((response) => {
-                        console.log("Logged in")
-                        router.push("/home")
+                        // this.seen = true;
+                        router.push("/home");
                     })
                     .catch((errors) => {
-                        console.log("Cannot login")
+                      // this.seen = false;
+                        console.log(errors);
                     })
                 }
                 login()
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        if(response.data.user) {
+                            router.push("/home")
+                        }
+                    }).catch((errors) => {
+
+                    })
             }
-        }
+        },
+        mounted() {
+          this.getUserData()
+        },
     }
 </script>
 

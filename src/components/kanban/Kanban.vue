@@ -7,13 +7,13 @@
 <script>
     import KanbanCard from './KanbanCard.vue'
     import axios from 'axios';
-    
+    import {EventBus} from '../../main';
+    import router from "../../router/index"
+
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
         timeout: 1000
     });
-
-    import {EventBus} from '../../main';
 
     export default {
         components: {
@@ -21,26 +21,23 @@
         },
         data() {
             return {
+                seen: true,
                 todos: [],
                 kanbans: []
             };
         },
         mounted() {
+            this.getUserData();
             let vm = this;
 
             EventBus.$on('update:todos', function(){
                 vm.$nextTick(function(){
                     vm.renderTodos();
-                });
+                });                
             });
 
-            this.renderTodos();
-
-            this.getUserData();
-
-            MyApiClient.get('api/todos').then(
-                response => (this.todos = response.data));
-
+            this.renderTodos();            
+            
             MyApiClient.get('api/kanbans').then(
                 response => (this.kanbans = response.data));
         },
@@ -56,14 +53,16 @@
             },
             getUserData: function() {
                 MyApiClient.get("/api/user")
-                    .then((response) => {
-                        console.log(response)
+                .then((response) => {
+                        if(response.data.user) {
+                            this.seen = false;
+                            router.push("/home")
+                        }
                     })
-                    .catch((errors) => {
-                        console.log(errors)
-                        router.push("/")
-                    })
-            }
+                .catch((errors) => {
+                    router.push("/")
+                })
+            },
         }
     }
 </script>
