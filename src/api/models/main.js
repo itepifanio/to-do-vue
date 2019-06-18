@@ -2,11 +2,13 @@ const Promise = require('bluebird')
 const AppDAO = require('./dao')  
 const Kanban = require('./kanban')  
 const Todo = require('./to-do')
+const User = require('./user')
 
 function main() {  
-  const dao = new AppDAO('../../database/database.sqlite3')
+  const dao = new AppDAO('./src/database/database.sqlite3')
   const todo = new Todo(dao)
   const kanban = new Kanban(dao)
+  const user = new User(dao);
   let kanbanId;
 
   kanban.createTable()
@@ -14,6 +16,8 @@ function main() {
     .then(() => kanban.create('Done'))
     .then(() => kanban.create('To do'))
     .then(() => kanban.create('Doing'))
+    .then(() => user.createTable())
+    .then(() => user.create('epitacio', 'epitacio@gmail.com', '123456'))
     .then((data) => {
       kanbanId = data.id;
       const todos = [

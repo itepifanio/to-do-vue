@@ -9,9 +9,9 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
+    <form v-on:submit="login">
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
@@ -23,6 +23,40 @@
   </div>
 </div>
 </template>
+<script>  
+    import router from "../../router/index.js"
+    import axios from "axios"   
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+  
+    export default {    
+        name: "Login",    
+        
+        methods: { 
+            login: (e) => {    
+                e.preventDefault()   
+                let email = e.target.elements.email.value
+                let password = e.target.elements.password.value
+                let login = () => {
+                    let user = {
+                        'email': email,
+                        'password': password
+                    }
+                    MyApiClient.post('/api/login', user).then((response) => {
+                        console.log("Logged in")
+                        router.push("/home")
+                    })
+                    .catch((errors) => {
+                        console.log("Cannot login")
+                    })
+                }
+                login()
+            }
+        }
+    }
+</script>
 
 <style>
 /* BASIC */

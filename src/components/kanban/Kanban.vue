@@ -7,12 +7,12 @@
 <script>
     import KanbanCard from './KanbanCard.vue'
     import axios from 'axios';
-    import {EventBus} from '../../main';
-    
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
         timeout: 1000
     });
+
+    import {EventBus} from '../../main';
 
     export default {
         components: {
@@ -30,11 +30,16 @@
             EventBus.$on('update:todos', function(){
                 vm.$nextTick(function(){
                     vm.renderTodos();
-                });                
+                });
             });
 
-            this.renderTodos();            
-            
+            this.renderTodos();
+
+            this.getUserData()
+
+            MyApiClient.get('api/todos').then(
+                response => (this.todos = response.data))
+
             MyApiClient.get('api/kanbans').then(
                 response => (this.kanbans = response.data))
         },
@@ -47,6 +52,16 @@
             renderTodos(){
                 MyApiClient.get('api/todos').then(
                     response => (this.todos = response.data))
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((errors) => {
+                        console.log(errors)
+                        router.push("/")
+                    })
             }
         }
     }
