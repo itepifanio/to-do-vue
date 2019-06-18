@@ -4,7 +4,7 @@ const Kanban = require('./kanban')
 const Todo = require('./to-do')
 
 function main() {  
-  const dao = new AppDAO('../../database/database.sqlite3')
+  const dao = new AppDAO('../database/database.sqlite3')
   const todo = new Todo(dao)
   const kanban = new Kanban(dao)
   let kanbanId;

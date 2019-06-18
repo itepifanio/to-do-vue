@@ -1,13 +1,13 @@
 <template>
     <div class="row">
-    <span v-for="kanban in kanbans" :key="kanban.id" class="col-md-4">
+    <span v-for="(kanban, index) in kanbans" :key="index" class="col-md-4">
         <div class='card padding-card'>
             <div class="card-header">
                 {{ kanban.title }}
             </div>
             <div class="col-md-4" style="max-width:none">
                 <div class='ui centered card-body'>
-                    <todo-list :todos="filterList(kanban.id, todos)" :kanbanid="kanban.id"></todo-list>
+                    <todo-list :todos="filterList(kanban.id, todos)"></todo-list>
 
                     <create-todo v-on:add-todo="addTodo" :kanbanid="kanban.id"></create-todo>
                 </div>
@@ -20,8 +20,7 @@
 <script type="text/javascript">
     import TodoList from '../todo/TodoList';
     import CreateTodo from '../todo/CreateTodo';
-    import {EventBus} from "../../main";
-    import axios from 'axios';  
+    import {EventBus} from "../../Events";
 
     export default {
         props: ['kanbans', 'todos'],
@@ -30,15 +29,12 @@
             CreateTodo
         },
         mounted() {
-            const MyApiClient = axios.create({
-                    baseURL: 'http://localhost:3000',
-                    timeout: 6000
-                });
-            
+            let todos = this.todos;
+
             EventBus.$on('delete-todo', function (todo) {
-                EventBus.$emit('update:todos');
-                MyApiClient.post('api/todos/delete/' + todo.id);
-            });            
+                const todoIndex = todos.indexOf(todo);
+                todos.splice(todoIndex, 1);
+            });
         },
         methods: {
             filterList(id, todos) {

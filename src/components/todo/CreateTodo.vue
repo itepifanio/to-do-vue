@@ -36,7 +36,6 @@
 
 <script>
     import moment from 'moment';
-    import axios from 'axios';
 
     export default {
         props: ['kanbanid'],
@@ -57,28 +56,14 @@
             },
             sendForm() {
                 if (this.titleText.length > 0 && this.projectText.length > 0) {
-                    const MyApiClient = axios.create({
-                        baseURL: 'http://localhost:3000',
-                        timeout: 6000
-                    });
-
                     const title = this.titleText;
                     const description = this.projectText;
                     const kanbanid = this.kanbanid;
-                    const date = this.date;
 
                     this.$emit('add-todo', {
                         title,
                         description,
-                        date,
                         kanbanid
-                    });
-
-                    MyApiClient.post('api/todos/store', {
-                        'title': title,
-                        'description': description,
-                        'date': date,
-                        'kanbanid': kanbanid
                     });
                 }
                 this.isCreating = false;

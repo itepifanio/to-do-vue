@@ -47,8 +47,7 @@
 
 <script type="text/javascript">
     import moment from 'moment';
-    import axios from 'axios';
-    import {EventBus} from "../../main";
+    import {EventBus} from "../../Events";
 
     export default {
         props: ['todo'],
@@ -59,7 +58,7 @@
         },
         methods: {
             format(date){
-                return moment(date).format('DD/MM/YYYY');
+                return moment(parseInt(date)).format('DD/MM/YYYY');
             },
             showForm() {
                 this.isEditing = true;
@@ -71,17 +70,5 @@
                 EventBus.$emit('delete-todo', todo);
             }
         },
-        watch: {
-            isEditing: function(){
-                if(this.isEditing == false){
-                const MyApiClient = axios.create({
-                    baseURL: 'http://localhost:3000',
-                    timeout: 6000
-                });
-            
-                MyApiClient.put('api/todos/update', this.todo);
-                }
-            }
-        }
     };
 </script>

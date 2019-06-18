@@ -2,7 +2,7 @@ import Vue from 'vue/dist/vue'
 import router from './router'
 import App from './App.vue'
 Vue.config.productionTip = false;
-export const EventBus = new Vue();
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
