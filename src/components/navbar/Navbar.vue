@@ -13,15 +13,15 @@
     <ul class="navbar-nav ml-auto">
 
       <li class="nav-item">
-        <router-link to="/home" class="nav-link"> Home </router-link>
+        <router-link to="/home" class="nav-link"> Início </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/" class="nav-link"> Login </router-link>
+        <router-link to="/" class="nav-link"> Entrar </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/register" class="nav-link"> Registro </router-link>
+        <router-link to="/register" class="nav-link"> Registrar-se </router-link>
       </li>
     </ul>
   </div>

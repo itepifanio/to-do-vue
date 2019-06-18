@@ -5,19 +5,19 @@
 
     <!-- Icon -->
     <div class="fadeIn first">
-      <img src="../../assets/user-icon.png" id="icon" alt="User Icon"/>
+      <img src="../../assets/todolist.png" id="icon" alt="User Icon"/>
     </div>
 
     <!-- Login Form -->
     <form v-on:submit="login">
-      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Seu e-mail">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Sua senha">
+      <input type="submit" class="fadeIn fourth" value="Entrar">
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="#">Esqueceu a senha?</a>
     </div>
 
   </div>
