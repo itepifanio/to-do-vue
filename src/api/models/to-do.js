@@ -11,30 +11,33 @@ class Todo {
         description TEXT,
         date text,
         kanbanid INTEGER,
-        CONSTRAINT todo_fk_kanbanid FOREIGN KEY (kanbanid)
-          REFERENCES kanbans(id) ON UPDATE CASCADE ON DELETE CASCADE)`;
+        userid INTEGER,
+        
+        CONSTRAINT todo_fk_kanbanid FOREIGN KEY (kanbanid) REFERENCES kanbans(id) ON UPDATE CASCADE ON DELETE CASCADE,
+        CONSTRAINT todo_fk_userid FOREIGN KEY (userid) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE)`;
     
     return this.dao.run(sql);
   }
 
-  create(title, description, date, kanbanid){
+  create(title, description, date, kanbanid, userid){
     return this.dao.run(
-      ` INSERT INTO todos (title, description, date, kanbanid) 
-        VALUES (?, ?, ?, ?) `,
-        [title, description, date, kanbanid]
+      ` INSERT INTO todos (title, description, date, kanbanid, userid) 
+        VALUES (?, ?, ?, ?, ?) `,
+        [title, description, date, kanbanid, userid]
     );
   }
 
   update(todo){
-    const {id, title, description, date} = todo;
-
+    const {id, title, description, date, kanbanid, userid} = todo;
     return this.dao.run(
       ` UPDATE todos 
       SET title = ?,
           description = ?,
-          date = ? 
+          date = ?,
+          kanbanid = ?
+          userid = ?
       WHERE id = ?`,
-      [title, description, date, id]
+      [title, description, date, kanbanid, userid, id]
     );
   }
 
@@ -47,6 +50,13 @@ class Todo {
 
   getAll() {
     return this.dao.all(`SELECT * FROM todos`);
+  }
+
+  first(id) {
+    return this.dao.all(
+      `SELECT * FROM todos WHERE id = ? LIMIT 1`,
+      [id]
+    );
   }
 
 }

@@ -18,6 +18,11 @@ export default new Router({
             redirect: '/login'
         },
         {
+            path: '/register',
+            name: 'register',
+            component: Register
+        },
+        {
             path: '/home',
             name: 'home',
             component: Kanban

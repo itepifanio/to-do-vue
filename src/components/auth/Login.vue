@@ -9,9 +9,9 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
+    <form v-on:submit="login">
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
@@ -23,6 +23,60 @@
   </div>
 </div>
 </template>
+<script>  
+    import router from "../../router/index.js"
+    import axios from "axios"   
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+  
+    export default {    
+        name: "Login",    
+        data() {
+          return {
+            seen: true
+          }
+        },
+        methods: { 
+            login: (e) => {    
+                e.preventDefault()   
+                let email = e.target.elements.email.value
+                let password = e.target.elements.password.value
+                let login = () => {
+                    let user = {
+                        'email': email,
+                        'password': password
+                    }
+                    MyApiClient.post('/api/login', user).then((response) => {
+                        console.log("Logged in");
+                        this.seen = true;
+                        router.push("/home");
+                    })
+                    .catch((errors) => {
+                      this.seen = false;
+                        console.log("Cannot login");
+                    })
+                }
+                login()
+            },
+            getUserData: function() {    
+                MyApiClient.get("/api/user")    
+                    .then((response) => {    
+                        console.log(response)
+                        if(response.data.user) {
+                            router.push("/home")
+                        }
+                    }).catch((errors) => {
+                        
+                    })
+            } 
+        },
+        mounted() {
+          this.getUserData()
+        },
+    }
+</script>
 
 <style>
 /* BASIC */
@@ -30,19 +84,16 @@
 html {
   background-color: #56baed;
 } */
-
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
 }
-
 a {
   color: #92badd;
   display:inline-block;
   text-decoration: none;
   font-weight: 400;
 }
-
 h2 {
   text-align: center;
   font-size: 16px;
@@ -52,11 +103,7 @@ h2 {
   margin: 40px 8px 10px 8px; 
   color: #cccccc;
 }
-
-
-
 /* STRUCTURE */
-
 .wrapper {
   display: flex;
   align-items: center;
@@ -66,7 +113,6 @@ h2 {
   min-height: 100%;
   padding: 20px;
 }
-
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
@@ -80,7 +126,6 @@ h2 {
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
 }
-
 #formFooter {
   background-color: #f6f6f6;
   border-top: 1px solid #dce8f1;
@@ -89,24 +134,15 @@ h2 {
   -webkit-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
 }
-
-
-
 /* TABS */
-
 h2.inactive {
   color: #cccccc;
 }
-
 h2.active {
   color: #0d0d0d;
   border-bottom: 2px solid #5fbae9;
 }
-
-
-
 /* FORM TYPOGRAPHY*/
-
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
   border: none;
@@ -128,11 +164,9 @@ input[type=button], input[type=submit], input[type=reset]  {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
   background-color: #39ace7;
 }
-
 input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
@@ -140,7 +174,6 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
-
 input[type=text] {
   background-color: #f6f6f6;
   border: none;
@@ -161,20 +194,14 @@ input[type=text] {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
-
 input[type=text]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
-
 input[type=text]:placeholder {
   color: #cccccc;
 }
-
-
-
 /* ANIMATIONS */
-
 /* Simple CSS3 Fade-in-down Animation */
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
@@ -184,7 +211,6 @@ input[type=text]:placeholder {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-
 @-webkit-keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -197,7 +223,6 @@ input[type=text]:placeholder {
     transform: none;
   }
 }
-
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -210,51 +235,42 @@ input[type=text]:placeholder {
     transform: none;
   }
 }
-
 /* Simple CSS3 Fade-in Animation */
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
 .fadeIn {
   opacity:0;
   -webkit-animation:fadeIn ease-in 1;
   -moz-animation:fadeIn ease-in 1;
   animation:fadeIn ease-in 1;
-
   -webkit-animation-fill-mode:forwards;
   -moz-animation-fill-mode:forwards;
   animation-fill-mode:forwards;
-
   -webkit-animation-duration:1s;
   -moz-animation-duration:1s;
   animation-duration:1s;
 }
-
 .fadeIn.first {
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
 }
-
 .fadeIn.second {
   -webkit-animation-delay: 0.6s;
   -moz-animation-delay: 0.6s;
   animation-delay: 0.6s;
 }
-
 .fadeIn.third {
   -webkit-animation-delay: 0.8s;
   -moz-animation-delay: 0.8s;
   animation-delay: 0.8s;
 }
-
 .fadeIn.fourth {
   -webkit-animation-delay: 1s;
   -moz-animation-delay: 1s;
   animation-delay: 1s;
 }
-
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
   display: block;
@@ -266,23 +282,16 @@ input[type=text]:placeholder {
   content: "";
   transition: width 0.2s;
 }
-
 .underlineHover:hover {
   color: #0d0d0d;
 }
-
 .underlineHover:hover:after{
   width: 100%;
 }
-
-
-
 /* OTHERS */
-
 *:focus {
     outline: none;
 } 
-
 #icon {
   margin-top: 15px;  
   width:150px;
