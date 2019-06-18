@@ -62,7 +62,7 @@
             }
         },    
         mounted() {    
-            this.getUserData()    
+            this.getUserData()
         } 
     }
    

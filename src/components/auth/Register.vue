@@ -19,19 +19,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="password"><i class="lock icon"></i></label>
-                                <input type="password" name="password" id="password" placeholder="Senha"/>
+                                <input type="password" name="password" id="password" placeholder="Senha" />
                                 <div id="passmsg">  </div><br/>
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="unlock icon"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repita a senha"/>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repita a senha" v-model="oldpassword"/>
                                 <div id="repassmsg">  </div><br/>
                             </div>
-                           
+
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Enviar dados"/>
                             </div>
-                            
+
                         </form>
                     </div>
                     <div class="signup-image">
@@ -44,70 +44,73 @@
     </div>
 
 </template>
-<script>  
+<script>
     import router from "../../router/index.js"
-    import axios from "axios"   
+    import axios from "axios"
     const MyApiClient = axios.create({
         baseURL: 'http://localhost:3000',
         timeout: 1000
     });
-  
-    export default {    
-        name: "Register",    
+
+    export default {
+        name: "Register",
         data() {
           return {
-            seen: true 
+            seen: true,
+              name: '',
+              password: '',
+              oldpassword: '',
+              email: ''
           }
         },
-        methods: { 
-            register: (e) => {    
+        methods: {
+            register: (e) => {
                 e.preventDefault();
-                let name = e.target.elements.name.value;
-                let email = e.target.elements.email.value;
-                let password = e.target.elements.password.value;
                 let register = () => {
                     let user = {
-                        'name': name,
-                        'email': email,
-                        'password': password
-                    }
+                        'name': e.target.elements.name.value,
+                        'email': e.target.elements.email.value,
+                        'password': e.target.elements.password.value
+                    };
+
                     MyApiClient.post('/api/register', user)
                         .then((response) => {
-                            this.seen = false;
                             router.push("/home")
                         })
                         .catch((errors) => {
                             console.log(errors)
                         })
-                }
+                };
                 register()
             },
-            getUserData: function() {    
-                MyApiClient.get("/api/user")    
+            getUserData: function() {
+                MyApiClient.get("/api/user")
                     .then((response) => {
                         if(response.data.user) {
                             this.seen = false;
                             router.push("/home")
                         }
+                    }).catch((errors) => {
+
                     })
-            } 
-        },    
-        mounted() {    
-            this.getUserData()    
-        } 
+            }
+        },
+        mounted() {
+            this.getUserData()
+        }
     }
 </script>
 
 <style>
 display-flex, .display-flex, .display-flex-center, .signup-content {
     display: flex;
-    display: -webkit-flex; 
+    display: -webkit-flex;
 }
 
 list-type-ulli {
     list-style-type: none;
     margin: 0;
-    padding: 0; 
+    padding: 0;
 }
 
 a:focus, a:active {
@@ -117,7 +120,7 @@ a:focus, a:active {
     -moz-transition: all 300ms ease 0s;
     -webkit-transition: all 300ms ease 0s;
     -o-transition: all 300ms ease 0s;
-    -ms-transition: all 300ms ease 0s; 
+    -ms-transition: all 300ms ease 0s;
 }
 
 input, select, textarea {
@@ -126,7 +129,7 @@ input, select, textarea {
     -moz-appearance: unset !important;
     -webkit-appearance: unset !important;
     -o-appearance: unset !important;
-    -ms-appearance: unset !important; 
+    -ms-appearance: unset !important;
 }
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
@@ -135,7 +138,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     -o-appearance: none !important;
     -ms-appearance: none !important;
-    margin: 0; 
+    margin: 0;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -144,22 +147,22 @@ input:focus, select:focus, textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     -o-box-shadow: none !important;
-    -ms-box-shadow: none !important; 
+    -ms-box-shadow: none !important;
 }
 
 img {
     max-width: 75%;
-    height: auto; 
+    height: auto;
 }
 
 figure {
-    margin: 0; 
+    margin: 0;
 }
 
 p {
     margin-bottom: 0px;
     font-size: 15px;
-    color: #777; 
+    color: #777;
 }
 
 h2 {
@@ -169,17 +172,17 @@ h2 {
     font-weight: bold;
     color: #222;
     font-family: Lato,'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 36px; 
+    font-size: 36px;
     text-transform: none;
 }
 
 .main {
     background: #f8f8f8;
-    padding: 0px 0; 
+    padding: 0px 0;
 }
 
 .clear {
-    clear: both; 
+    clear: both;
 }
 
 body {
@@ -204,7 +207,7 @@ body {
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     -o-border-radius: 20px;
-    -ms-border-radius: 20px; 
+    -ms-border-radius: 20px;
 }
 
 .display-flex {
@@ -217,7 +220,7 @@ body {
     -moz-align-items: center;
     -webkit-align-items: center;
     -o-align-items: center;
-    -ms-align-items: center; 
+    -ms-align-items: center;
 }
 
 .display-flex-center {
@@ -230,7 +233,7 @@ body {
     -moz-align-items: center;
     -webkit-align-items: center;
     -o-align-items: center;
-    -ms-align-items: center; 
+    -ms-align-items: center;
 }
 
 .position-center {
@@ -241,59 +244,59 @@ body {
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%); 
+    -ms-transform: translate(-50%, -50%);
 }
 
 .signup {
-    margin-bottom: 150px; 
+    margin-bottom: 150px;
 }
 
 .signup-content {
-    padding: 75px 0; 
+    padding: 75px 0;
 }
 
 .signup-form, .signup-image {
     width: 50%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .signup-image {
-    margin: 0 55px; 
+    margin: 0 55px;
 }
 
 .form-title {
-    margin-bottom: 33px; 
+    margin-bottom: 33px;
 }
 
 .signup-image {
-    margin-top: 45px; 
+    margin-top: 45px;
 }
 
 figure {
     margin-bottom: 50px;
-    text-align: center; 
+    text-align: center;
 }
 
 .signup-image-link {
     font-size: 14px;
     color: #222;
     display: block;
-    text-align: center; 
+    text-align: center;
 }
 
 .term-service {
     font-size: 13px;
-    color: #222; 
+    color: #222;
 }
 
 .signup-form {
     margin-left: 75px;
     margin-right: 75px;
-    padding-left: 34px; 
+    padding-left: 34px;
 }
 
 .register-form {
-    width: 100%; 
+    width: 100%;
 }
 
 .form-group {
@@ -302,7 +305,7 @@ figure {
     overflow: hidden; }
 
 .form-group:last-child {
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
 }
 .signup input[type=text], .signup input[type=text], .signup input[type=email], .signup input[type=search], .signup input[type=password] {
     width: 100% !important;
@@ -311,7 +314,7 @@ figure {
     border-bottom: 1px solid #999 !important;
     padding: 6px 30px !important;
     font-family: Lato,'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    box-sizing: border-box !important; 
+    box-sizing: border-box !important;
     background-color: #fff !important;
     text-align: left !important;
     font-size: 14px !important;
@@ -332,31 +335,31 @@ figure {
 }
 
 input::-webkit-input-placeholder {
-    color: #999; 
+    color: #999;
 }
 input::-moz-placeholder {
-    color: #999; 
+    color: #999;
 }
 input:-ms-input-placeholder {
-    color: #999; 
+    color: #999;
 }
 input:-moz-placeholder {
-    color: #999; 
+    color: #999;
 }
 input:focus {
-    border-bottom: 1px solid #222; 
+    border-bottom: 1px solid #222;
 }
 input:focus::-webkit-input-placeholder {
-    color: #222; 
+    color: #222;
 }
 input:focus::-moz-placeholder {
-    color: #222; 
+    color: #222;
 }
 input:focus:-ms-input-placeholder {
-    color: #222; 
+    color: #222;
 }
 input:focus:-moz-placeholder {
-    color: #222; 
+    color: #222;
 }
 
 .signup label{
@@ -368,11 +371,11 @@ input:focus:-moz-placeholder {
     -webkit-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-    color: #222; 
+    color: #222;
 }
 
 .label-has-error {
-  top: 22%; 
+  top: 22%;
 }
 
 label.error {
@@ -380,7 +383,7 @@ label.error {
     background-position-y: 3px;
     padding-left: 20px;
     display: block;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 label.valid {
@@ -391,7 +394,7 @@ label.valid {
     margin-top: -6px;
     width: 20px;
     height: 20px;
-    background: transparent; 
+    background: transparent;
 }
 
 label.valid:after {
@@ -401,7 +404,7 @@ label.valid:after {
     height: 100%;
     position: absolute;
     font-size: 16px;
-    color: green; 
+    color: green;
 }
 
 .label-agree-term {
@@ -411,11 +414,11 @@ label.valid:after {
     -moz-transform: translateY(0);
     -webkit-transform: translateY(0);
     -o-transform: translateY(0);
-    -ms-transform: translateY(0); 
+    -ms-transform: translateY(0);
 }
 
 .material-icons-name {
-    font-size: 18px; 
+    font-size: 18px;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -427,13 +430,13 @@ input[type=button], input[type=submit], input[type=reset] {
 @media screen and (max-width: 1200px) {
     .container {
         width: calc( 100% - 30px);
-        max-width: 100%; 
-    } 
+        max-width: 100%;
+    }
 }
 @media screen and (min-width: 1024px) {
     .container {
-        max-width: 1200px; 
-    } 
+        max-width: 1200px;
+    }
 }
 @media screen and (max-width: 768px) {
     .signup-content {
@@ -446,27 +449,27 @@ input[type=button], input[type=submit], input[type=reset] {
         -moz-justify-content: center;
         -webkit-justify-content: center;
         -o-justify-content: center;
-        -ms-justify-content: center; 
+        -ms-justify-content: center;
     }
 
     .signup-form {
         margin-left: 0px;
         margin-right: 0px;
         padding-left: 0px;
-        padding: 0 30px; 
+        padding: 0 30px;
     }
 
     .signup-form, .signup-image {
-        width: auto; 
+        width: auto;
     }
 
     .form-button {
-        text-align: center; 
+        text-align: center;
     }
 
     .form-title {
-        text-align: center; 
-    } 
+        text-align: center;
+    }
 
     .padding-card{
         margin-bottom: 15px;

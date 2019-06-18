@@ -49,7 +49,11 @@
     import moment from 'moment';
     import axios from 'axios';
     import {EventBus} from "../../main";
-
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+    
     export default {
         props: ['todo'],
         data() {
@@ -69,17 +73,28 @@
             },
             deleteTodo(todo) {
                 EventBus.$emit('delete-todo', todo);
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        if(response.data.user) {
+                            this.seen = false;
+                            router.push("/home")
+                        }
+                    }).catch((errors) => {
+
+                })
             }
         },
         watch: {
             isEditing: function(){
                 if(this.isEditing == false){
-                const MyApiClient = axios.create({
-                    baseURL: 'http://localhost:3000',
-                    timeout: 6000
-                });
-            
-                MyApiClient.put('api/todos/update', this.todo);
+                    const MyApiClient = axios.create({
+                        baseURL: 'http://localhost:3000',
+                        timeout: 6000
+                    });
+
+                    MyApiClient.put('api/todos/update', this.todo);
                 }
             }
         }
