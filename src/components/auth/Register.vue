@@ -5,7 +5,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Registre-se</h2>
-                        <form method="POST" class="register-form" id="register-form">
+                        <form v-on:submit="register">
                             <div class="form-group">
                                 <label for="name"><i class="user icon"></i></label>
                                 <input type="text" name="name" id="name" placeholder="Seu nome"/>
@@ -18,8 +18,8 @@
                                 <div id="emailmsg">  </div><br/>
                             </div>
                             <div class="form-group">
-                                <label for="pass"><i class="lock icon"></i></label>
-                                <input type="password" name="pass" id="pass" placeholder="Senha"/>
+                                <label for="password"><i class="lock icon"></i></label>
+                                <input type="password" name="password" id="password" placeholder="Senha"/>
                                 <div id="passmsg">  </div><br/>
                             </div>
                             <div class="form-group">
@@ -29,7 +29,7 @@
                             </div>
                            
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Enviar dados" onclick="return validateUser()"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Enviar dados"/>
                             </div>
                             
                         </form>
@@ -44,6 +44,60 @@
     </div>
 
 </template>
+<script>  
+    import router from "../../router/index.js"
+    import axios from "axios"   
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+  
+    export default {    
+        name: "Register",    
+        data() {
+          return {
+            seen: true 
+          }
+        },
+        methods: { 
+            register: (e) => {    
+                e.preventDefault();
+                console.log(e.target.elements);  
+                let name = e.target.elements.name.value;
+                let email = e.target.elements.email.value;
+                let password = e.target.elements.password.value;
+                let register = () => {
+                    let user = {
+                        'name': name,
+                        'email': email,
+                        'password': password
+                    }
+                    MyApiClient.post('/api/register', user).then((response) => {
+                        this.seen = false;
+                        router.push("/home")
+                    })
+                    .catch((errors) => {
+                        console.log("Cannot register")
+                    })
+                }
+                register()
+            },
+            getUserData: function() {    
+                MyApiClient.get("/api/user")    
+                    .then((response) => {    
+                        console.log(response)
+                        if(response.data.user) {
+                            this.seen = false;
+                            router.push("/home")
+                        }
+                    })
+            } 
+        },    
+        mounted() {    
+            this.getUserData()    
+        } 
+    }
+</script>
 
 <style>
 display-flex, .display-flex, .display-flex-center, .signup-content {

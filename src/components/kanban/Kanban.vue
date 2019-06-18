@@ -20,11 +20,13 @@
         },
         data() {
             return {
+                seen: true,
                 todos: [],
                 kanbans: []
             };
         },
         mounted() {
+            this.getUserData();
             let vm = this;
 
             EventBus.$on('update:todos', function(){
@@ -34,7 +36,6 @@
             });
 
             this.renderTodos();            
-            
             MyApiClient.get('api/kanbans').then(
                 response => (this.kanbans = response.data))
         },
@@ -42,7 +43,19 @@
             renderTodos(){
                 MyApiClient.get('api/todos').then(
                     response => (this.todos = response.data))
-            }
+            },
+            getUserData: function() {    
+                MyApiClient.get("/api/user")
+                .then((response) => {    
+                        if(response.data.user) {
+                            this.seen = false;
+                            router.push("/home")
+                        }
+                    })    
+                .catch((errors) => {
+                    router.push("/")    
+                })
+            },
         }
     }
 </script>

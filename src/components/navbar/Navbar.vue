@@ -10,12 +10,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-
-      <li class="nav-item">
-        <router-link to="/home" class="nav-link"> Home </router-link>
-      </li>
-
+    <ul class="navbar-nav ml-auto" v-if="seen">
       <li class="nav-item">
         <router-link to="/" class="nav-link"> Login </router-link>
       </li>
@@ -24,14 +19,52 @@
         <router-link to="/register" class="nav-link"> Registro </router-link>
       </li>
     </ul>
+    <ul class="navbar-nav ml-auto" v-if="!seen">
+      <li class="nav-item">
+        <router-link to="/home" class="nav-link"> Home </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/" class="nav-link" v-on:click="logout"> Logout </router-link>
+      </li>
+    </ul>
   </div>
 </nav>
 </div>
 </template>
 
-<script>
-export default{
-}
+<script>  
+    import router from "../../router/index.js"
+    import axios from "axios"   
+    const MyApiClient = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+  
+    export default {    
+        name: "Navbar",    
+        methods: { 
+            getUserData: function() {    
+                MyApiClient.get("/api/user")    
+                    .then((response) => {    
+                        if(response.data.user) {
+                          this.seen = false;
+                          router.push("/home")
+                        }
+                    })
+            },
+            logout: function() {
+              MyApiClient.get('/api/logout')
+                .then((res) => {
+                  this.seen = true;
+                  router.push("/")
+                })
+            }
+        },    
+        mounted() {    
+            this.getUserData()    
+        } 
+    }
+   
 </script>
 
 <style>
