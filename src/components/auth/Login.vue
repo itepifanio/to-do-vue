@@ -33,27 +33,20 @@
 
     export default {
         name: "Login",
-        // data() {
-        //   return {
-        //     seen: true
-        //   }
-        // },
         methods: {
             login: (e) => {
                 e.preventDefault()
-                let email = e.target.elements.email.value
-                let password = e.target.elements.password.value
+                let email = e.target.elements.email.value;
+                let password = e.target.elements.password.value;
                 let login = () => {
                     let user = {
                         'email': email,
                         'password': password
-                    }
+                    };
                     MyApiClient.post('/api/login', user).then((response) => {
-                        // this.seen = true;
-                        router.push("/home");
+                      router.push("/home");
                     })
                     .catch((errors) => {
-                      // this.seen = false;
                         console.log(errors);
                     })
                 }
@@ -63,7 +56,7 @@
                 MyApiClient.get("/api/user")
                     .then((response) => {
                         if(response.data.user) {
-                            router.push("/home")
+                            router.push("/home");
                         }
                     }).catch((errors) => {
 
@@ -71,7 +64,7 @@
             }
         },
         mounted() {
-          this.getUserData()
+          // this.getUserData()
         },
     }
 </script>

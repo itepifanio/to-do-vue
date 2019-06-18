@@ -21,13 +21,12 @@
         },
         data() {
             return {
-                seen: true,
                 todos: [],
                 kanbans: []
             };
         },
         mounted() {
-            this.getUserData();
+            // this.getUserData();
             let vm = this;
 
             EventBus.$on('update:todos', function(){
@@ -55,7 +54,6 @@
                 MyApiClient.get("/api/user")
                 .then((response) => {
                         if(response.data.user) {
-                            this.seen = false;
                             router.push("/home")
                         }
                     })

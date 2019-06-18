@@ -12,20 +12,20 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <router-link to="/" class="nav-link"> Login </router-link>
+        <router-link to="/" class="nav-link" v-show="!logged"> Login </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/register" class="nav-link"> Registro </router-link>
+        <router-link to="/register" class="nav-link" v-show="!logged"> Registro </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/home" class="nav-link"> Home </router-link>
+        <router-link to="/home" class="nav-link" v-show="logged"> Home </router-link>
       </li>
 
       <li class="nav-item">
-        <router-link to="/" class="nav-link" v-on:click="logout"> Logout </router-link>
-      </li>
+        <a href="#" class="nav-link" v-on:click="logout" v-show="logged"> Logout </a>
+        </li>
     </ul>
   </div>
 </nav>
@@ -41,29 +41,38 @@
     });
   
     export default {    
-        name: "Navbar",    
+        name: "Navbar",
+        data() {
+          return {
+            logged: false,
+          }
+        },    
         methods: { 
-            getUserData: function() {    
-                MyApiClient.get("/api/user")    
-                    .then((response) => {    
-                        if(response.data.user) {
-                          router.push("/home")
-                        }
-                    })
-            },
-            logout: function() {
-              console.log("Logout");
+            logout: function(e) {
+              e.preventDefault();
               MyApiClient.get('/api/logout')
                 .then((res) => {
+                  this.logged = false;
                   router.push("/")
                 }).catch((err) => {
                   console.log(err);
               })
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        if(response.data.user) {
+                            this.logged = true;
+                            router.push("/home");
+                        }
+                    }).catch((errors) => {
+
+                    })
             }
-        },    
-        mounted() {    
-            this.getUserData()
-        } 
+        },
+        mounted() {
+          this.getUserData();
+        },
     }
    
 </script>

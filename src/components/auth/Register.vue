@@ -56,7 +56,6 @@
         name: "Register",
         data() {
           return {
-            seen: true,
               name: '',
               password: '',
               oldpassword: '',
@@ -87,7 +86,6 @@
                 MyApiClient.get("/api/user")
                     .then((response) => {
                         if(response.data.user) {
-                            this.seen = false;
                             router.push("/home")
                         }
                     }).catch((errors) => {
@@ -96,7 +94,7 @@
             }
         },
         mounted() {
-            this.getUserData()
+            // this.getUserData()
         }
     }
 </script>
