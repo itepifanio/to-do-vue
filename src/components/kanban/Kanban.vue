@@ -12,6 +12,8 @@
         timeout: 1000
     });
 
+    import {EventBus} from '../../main';
+
     export default {
         components: {
             KanbanCard
@@ -22,26 +24,45 @@
                 kanbans: []
             };
         },
-        methods: {    
-            getUserData: function() {    
-                MyApiClient.get("/api/user")    
-                    .then((response) => {    
-                        console.log(response)    
-                    })    
-                    .catch((errors) => {    
-                        console.log(errors)    
-                        router.push("/")    
-                    })    
-            }    
-        },
-        mounted() {     
-            this.getUserData()  
-            
+        mounted() {
+            let vm = this;
+
+            EventBus.$on('update:todos', function(){
+                vm.$nextTick(function(){
+                    vm.renderTodos();
+                });
+            });
+
+            this.renderTodos();
+
+            this.getUserData()
+
             MyApiClient.get('api/todos').then(
                 response => (this.todos = response.data))
 
             MyApiClient.get('api/kanbans').then(
                 response => (this.kanbans = response.data))
+        },
+        watch:{
+            'todos' : function(){
+                this.renderTodos();
+            }
+        },
+        methods: {
+            renderTodos(){
+                MyApiClient.get('api/todos').then(
+                    response => (this.todos = response.data))
+            },
+            getUserData: function() {
+                MyApiClient.get("/api/user")
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((errors) => {
+                        console.log(errors)
+                        router.push("/")
+                    })
+            }
         }
     }
 </script>

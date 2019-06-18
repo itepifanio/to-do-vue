@@ -5,8 +5,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
 
-const AppDAO = require('../models/dao') 
-const dao = new AppDAO('./src/database/database.sqlite3') 
+const AppDAO = require('../models/dao')
+const dao = new AppDAO('./src/database/database.sqlite3')
 const User = require('../models/user');
 const users = new User(dao);
 
@@ -26,8 +26,10 @@ app.use(passport.session());
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
+
 
 // https://blog.jscrambler.com/vue-js-authentication-system-with-node-js-backend
 
@@ -38,7 +40,10 @@ const kanbanController = require('../controllers/kanbanController');
 /* ******************** KANBAN ************************* */
 app.get('/api/kanbans', kanbanController.kanbanList);
 /* ******************** TODO ************************* */
-app.get('/api/todos', todoController.todoList);
+app.get('/api/todos', todoController.list);
+app.post('/api/todos/store', todoController.store);
+app.put('/api/todos/update', todoController.update);
+app.post('/api/todos/delete/:id', todoController.delete);
 
 app.post("/api/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
